@@ -8,26 +8,14 @@ using System.Threading.Tasks;
 
 namespace ObjectComparer
 {
-    public   class Comparer
+    public class Comparer:ICompareSimilar
     {
-         
-        public static bool AreSimilar<T>(T first, T second)
+
+        
+        public  bool AreSimilar<T>(T first, T second)
         {
-
-
             Comparer comparer=new Comparer();
-
-            //if (first == null && second == null)
-            //    return false;
-
-            //if (first.GetType().IsValueType && !first.Equals(second))
-            //    return false;
-
-            //if (first.GetType().IsClass)
-            //{
-                return comparer.compareSimilar(first, second); 
-            //} 
-            //return true;
+            return comparer.compareSimilar(first, second); 
         }
 
         private  bool compareSimilar<T>(T first, T second)
@@ -67,9 +55,17 @@ namespace ObjectComparer
                         return false;
                     }
                 }
-                
+
                 if (first.GetType().IsValueType && !first.Equals(second))
                     return false;
+            }
+            else if (first == null && second == null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
             }
             return res;
         }
@@ -88,11 +84,11 @@ namespace ObjectComparer
         }
 
 
-        private  bool checkIfArraySimilar(Object v1, Object v2)
+        private  bool checkIfArraySimilar(Object first, Object second)
         {
             
-            List<object> firstArg = this.getObjectArrayAsList(v1);
-            List<object> secondArg = this.getObjectArrayAsList(v2);
+            List<object> firstArg = this.getObjectArrayAsList(first);
+            List<object> secondArg = this.getObjectArrayAsList(second);
             
             if (firstArg.Count != secondArg.Count)
                 return false;
@@ -114,5 +110,7 @@ namespace ObjectComparer
 
             return true;
         }
+
+         
     }
 }

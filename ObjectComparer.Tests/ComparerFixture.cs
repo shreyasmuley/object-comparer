@@ -7,11 +7,29 @@ namespace ObjectComparer.Tests
     [TestClass]
     public class ComparerFixture
     {
+        Comparer comparer = new Comparer();
+
+
         [TestMethod]
         public void Null_values_are_similar_test()
         {
             string first = null, second = null;
-            Assert.IsTrue(Comparer.AreSimilar(first, second));
+            Assert.IsTrue(comparer.AreSimilar(first, second));
+        }
+        [TestMethod]
+        public void Null_values_are_dissimilar_test()
+        {
+            Student first =  new Student(){
+                id = 1
+                ,
+                name = "John Conner"
+                ,
+                marks = new int[] { 10, 12, 14 }
+                 
+                ,
+                dob = DateTime.Today
+            }, second = null;
+            Assert.IsFalse(comparer.AreSimilar(first, second));
         }
         [TestMethod]
         public void class_values_similar_test()
@@ -20,11 +38,10 @@ namespace ObjectComparer.Tests
             {
                 id = 1
                 ,
-                name = "A"
+                name = "John Conner"
                 ,
                 marks = new int[] { 10, 12, 14 }
-                ,
-                dept = new Dept() { id = 5, name = "History" }
+                
                 ,
                 dob = DateTime.Today
             }
@@ -32,15 +49,14 @@ namespace ObjectComparer.Tests
                 {
                     id = 1
                 ,
-                    name = "A"
+                    name = "John Conner"
                 ,
                     marks = new int[] { 10, 12, 14 }
-                ,
-                    dept = new Dept() { id = 5, name = "History" }
+                
                 ,
                     dob = DateTime.Today.AddDays(0)
                 };
-            Assert.IsTrue(Comparer.AreSimilar(first, second));
+            Assert.IsTrue(comparer.AreSimilar(first, second));
         }
         [TestMethod]
         public void class_values_dissimilar_test()
@@ -49,7 +65,7 @@ namespace ObjectComparer.Tests
             {
                 id = 1
                 ,
-                name = "A"
+                name = "John Conner"
                 ,
                 marks = new int[] { 10, 12, 14 }
 
@@ -59,12 +75,12 @@ namespace ObjectComparer.Tests
             {
                 id = 1
             ,
-                name = "A"
+                name = "John Conner"
             ,
                 marks = new int[] { 10, 12, 122 }
 
             };
-            Assert.IsFalse(Comparer.AreSimilar(first, second));
+            Assert.IsFalse(comparer.AreSimilar(first, second));
         }
         [TestMethod]
         public void nested_class_values_similar()
@@ -73,27 +89,19 @@ namespace ObjectComparer.Tests
             {
                 id = 1
                 ,
-                name = "A"
+                name = "John Conner"
                 ,
-                dept= new Dept() { 
-                id=101,
-                name="CS"
-                }
-
-            }
-            , second = new Employee()
-            {
-                id = 1
-            ,
-                name = "A"
-            ,
                 dept = new Dept()
                 {
                     id = 101,
                     name = "CS"
+                ,
+                    yearOfEst = 2000
                 }
-            };
-            Assert.IsTrue(Comparer.AreSimilar(first, second));
+
+            }
+            , second = (Employee)first.Clone();
+            Assert.IsTrue(comparer.AreSimilar(first, second));
         }
         [TestMethod]
         public void nested_class_values_dissimilar()
@@ -102,28 +110,34 @@ namespace ObjectComparer.Tests
             {
                 id = 1
                 ,
-                name = "A"
+                name = "John Conner"
                 ,
                 dept = new Dept()
                 {
                     id = 101,
-                    name = "CS"
+                    name = "CS",
+
+                    yearOfEst = 2000
                 }
 
             }
+
+             
             , second = new Employee()
             {
                 id = 1
             ,
-                name = "A"
+                name = "John Conner"
             ,
                 dept = new Dept()
                 {
                     id = 101,
-                    name = "IT"
+                    name = "IT",
+
+                    yearOfEst = 2003
                 }
             };
-            Assert.IsFalse(Comparer.AreSimilar(first, second));
+            Assert.IsFalse(comparer.AreSimilar(first, second));
         }
     }
 

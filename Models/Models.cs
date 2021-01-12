@@ -6,24 +6,30 @@ using System.Threading.Tasks;
 
 namespace Models
 {
-    public class Student
-    {
+
+
+    public abstract class Base: ICloneable {
         public int id { get; set; }
         public string name { get; set; }
-        public int[] marks { get; set; }
-        public Dept dept { get; set; }
+
+        public object Clone()
+        {
+            return this.MemberwiseClone();
+        }
+    }
+    public class Student:Base
+    {
+        public int[] marks { get; set; } 
         public DateTime dob { get; set; }
     }
-    public class Dept
+    public class Dept:Base
     {
-        public int id { get; set; }
-        public string name { get; set; }
+        public int yearOfEst { get; set; }
     }
 
-    public class Employee
+    public class Employee:Base
     {
-        public int id { get; set; }
-        public string name { get; set; }
+       
         public Dept dept { get; set; }
     }
 }
