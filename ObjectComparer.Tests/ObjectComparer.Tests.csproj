@@ -55,6 +55,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Models\Models.csproj">
+      <Project>{5686c3a5-f393-4e69-be4c-50a382757790}</Project>
+      <Name>Models</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ObjectComparer\ObjectComparer.csproj">
       <Project>{c28c3a10-fb55-48c0-af31-3282d58154e8}</Project>
       <Name>ObjectComparer</Name>
